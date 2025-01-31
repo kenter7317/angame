@@ -4,17 +4,20 @@ import de.gurkenlabs.litiengine.Game
 import de.gurkenlabs.litiengine.IUpdateable
 import de.gurkenlabs.litiengine.graphics.ImageRenderer
 import de.gurkenlabs.litiengine.graphics.TextRenderer
-import de.gurkenlabs.litiengine.gui.Menu
+import de.gurkenlabs.litiengine.gui.GuiComponent
+import de.gurkenlabs.litiengine.gui.ImageComponent
 import de.gurkenlabs.litiengine.gui.screens.GameScreen
 import de.gurkenlabs.litiengine.input.Input
 import de.gurkenlabs.litiengine.resources.Resources
 import de.gurkenlabs.litiengine.util.ColorHelper
 import de.gurkenlabs.litiengine.util.Imaging
-import per.kenter7317.extension.*
+import per.kenter7317.extension.ControllableMenu
+import per.kenter7317.extension.RunnableString
 import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.event.KeyEvent
 import java.awt.image.BufferedImage
+import kotlin.concurrent.timer
 
 class TitleScreen : GameScreen("Title"), IUpdateable {
 
@@ -24,9 +27,6 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
 
     private lateinit var LOGO: BufferedImage
 
-    private val centerX = Game.window().resolution.getWidth() / 2.0
-
-    private val centerY = Game.window().resolution.getHeight() * 1 / 2
     override fun prepare() {
         super.prepare()
         Game.loop().attach(this)
@@ -54,10 +54,10 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
             Game.window().center.y - 100,
             800.0,
             400.0,
-            null,
-            RunnableString(this::startGame,"새 이야기를 작성한다."),
-            RunnableString(this::loadGame,"이야기를 불러온다."),
-            RunnableString(this::setting,"설정한다.")
+            Resources.spritesheets().get("menu-bg.png"),
+            RunnableString(this::startGame, "새 이야기를 작성한다."),
+            RunnableString(this::loadGame, "이야기를 불러온다."),
+            RunnableString(this::setting, "설정한다.")
         )
         Input.keyboard().onKeyReleased { event: KeyEvent ->
             val menu = this.menu
@@ -66,17 +66,19 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
                     menu.moveSelection(true)
                     //  current = (size - 1) - abs((last + 1) % size)
                 }
+
                 KeyEvent.VK_DOWN -> {
                     menu.moveSelection(false)
                     //    current = abs((last + 1) % size)
                 }
+
                 KeyEvent.VK_ENTER -> {
                     menu.runCurrentSelection()
                 }
             }
         }
         components.add(this.menu)
-
+        components.add(ImageComponent(Game.window().center.x - LOGO.width / 2, Game.window().height * 2.5 / 8 - LOGO.height * 5 / 6, LOGO))
     }
 
     override fun render(g: Graphics2D?) {
@@ -87,12 +89,6 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
 
         TextRenderer.enableTextAntiAliasing(g)
 
-        ImageRenderer.render(
-            g,
-            LOGO,
-            Game.window().center.x - LOGO.width / 2,
-            Game.window().height * 2.5 / 8 - LOGO.height * 5 / 6
-        )
         g.setRenderingHints(originalHints)
         super.render(g)
     }
@@ -101,13 +97,38 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
     }
 
     private fun startGame() {
-        Game.screens().display("Game")
-        this.menu.isEnabled = false
-        this.menu.isVisible = false
-        this;
+        hideTitleForeground()
 
     }
 
+    private fun hideTitleForeground() {
+        this.components.forEach { comp: GuiComponent ->
+            fadeOutAndDisappear(comp, 700)
+        }
+    }
+
+
+    private fun fadeOutAndDisappear(comp: GuiComponent, duration: Int = 700) {
+        val originalColor: Color = comp.appearance.foreColor // 현재 foreColor 가져오기
+        var alpha = 1.0f // 초기 투명도 (완전 불투명)
+
+        val interval = 50 // 50ms마다 실행
+        val steps = duration / interval // 전체 단계 수
+
+        timer(period = interval.toLong(), initialDelay = 0) {
+            alpha -= 1.0f / steps // 점진적으로 투명해짐
+
+            if (alpha <= 0) {
+                alpha = 0f
+                comp.isVisible = false // 완전히 투명해지면 숨김
+                cancel()
+            }
+
+            // 현재 색상의 투명도 조절 (A값 변경)
+            val newColor = Color(originalColor.red, originalColor.green, originalColor.blue, (alpha * 255).toInt())
+            comp.appearance.foreColor = newColor
+        }
+    }
     private fun loadGame() {
         TODO("Not yet implemented")
     }
