@@ -11,8 +11,8 @@ import de.gurkenlabs.litiengine.input.Input
 import de.gurkenlabs.litiengine.resources.Resources
 import de.gurkenlabs.litiengine.util.ColorHelper
 import de.gurkenlabs.litiengine.util.Imaging
-import per.kenter7317.extension.ControllableMenu
 import per.kenter7317.extension.RunnableString
+import per.kenter7317.gui.ControllableMenu
 import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.event.KeyEvent
@@ -40,7 +40,6 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
             comp.appearance.foreColor = ColorHelper.decode("#255655")
             comp.appearanceHovered.foreColor = ColorHelper.decode("#593D35")
         }
-
         this.menu.isEnabled = true
         this.menu.cellComponents[0].isHovered = true
     }
@@ -61,24 +60,32 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
         )
         Input.keyboard().onKeyReleased { event: KeyEvent ->
             val menu = this.menu
-            when (event.keyCode) {
-                KeyEvent.VK_UP -> {
-                    menu.moveSelection(true)
-                    //  current = (size - 1) - abs((last + 1) % size)
-                }
+            if (menu.isVisible) {
+                when (event.keyCode) {
+                    KeyEvent.VK_UP -> {
+                        menu.moveSelection(true)
+                        //  current = (size - 1) - abs((last + 1) % size)
+                    }
 
-                KeyEvent.VK_DOWN -> {
-                    menu.moveSelection(false)
-                    //    current = abs((last + 1) % size)
-                }
+                    KeyEvent.VK_DOWN -> {
+                        menu.moveSelection(false)
+                        //    current = abs((last + 1) % size)
+                    }
 
-                KeyEvent.VK_ENTER -> {
-                    menu.runCurrentSelection()
+                    KeyEvent.VK_ENTER -> {
+                        menu.runCurrentSelection()
+                    }
                 }
             }
         }
         components.add(this.menu)
-        components.add(ImageComponent(Game.window().center.x - LOGO.width / 2, Game.window().height * 2.5 / 8 - LOGO.height * 5 / 6, LOGO))
+        components.add(
+            ImageComponent(
+                Game.window().center.x - LOGO.width / 2,
+                Game.window().height * 2.5 / 8 - LOGO.height * 5 / 6,
+                LOGO
+            )
+        )
     }
 
     override fun render(g: Graphics2D?) {
@@ -99,6 +106,7 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
     private fun startGame() {
         hideTitleForeground()
 
+
     }
 
     private fun hideTitleForeground() {
@@ -106,7 +114,6 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
             fadeOutAndDisappear(comp, 700)
         }
     }
-
 
     private fun fadeOutAndDisappear(comp: GuiComponent, duration: Int = 700) {
         val originalColor: Color = comp.appearance.foreColor // 현재 foreColor 가져오기
@@ -129,10 +136,11 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
             comp.appearance.foreColor = newColor
         }
     }
-    private fun loadGame() {
-        TODO("Not yet implemented")
-    }
 
+    private fun loadGame() {
+        Game.window().renderComponent.fadeOut(700)
+        Game.screens().display("SaveData")
+    }
     private fun setting() {
         TODO("Not yet implemented")
     }

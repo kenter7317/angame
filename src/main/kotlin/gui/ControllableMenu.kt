@@ -1,9 +1,11 @@
-package per.kenter7317.extension
+package per.kenter7317.gui
 
 import de.gurkenlabs.litiengine.graphics.Spritesheet
 import de.gurkenlabs.litiengine.gui.ComponentMouseEvent
 import de.gurkenlabs.litiengine.gui.ImageComponent
 import de.gurkenlabs.litiengine.gui.ImageComponentList
+import per.kenter7317.extension.RunnableString
+import per.kenter7317.extension.circleSelection
 import java.util.function.IntConsumer
 import kotlin.properties.Delegates
 
@@ -52,6 +54,7 @@ class ControllableMenu(
     fun runCurrentSelection() {
         items[this.currentSelection].run()
     }
+
     fun moveSelection(minus: Boolean) {
         val size = this.cellComponents.size
         this.currentSelection = circleSelection(this.currentSelection, size, minus)
