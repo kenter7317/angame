@@ -1,10 +1,10 @@
 package per.kenter7317.entity.player
 
 import de.gurkenlabs.litiengine.Direction
-import per.kenter7317.entity.Entity
+import per.kenter7317.entity.AEntity
 import per.kenter7317.entity.EntityAttribute
 
-class Player : Entity() {
+class Player : AEntity() {
     init {
         attributes = hashMapOf(
             EntityAttribute.Health to 100,
@@ -88,15 +88,15 @@ class Player : Entity() {
     private fun getSpeed(): Int {
         return getAttribute(EntityAttribute.Speed) as Int
     }
-
+    // <summary> Returns the player's level </summary>
     private fun getLevel(): Int {
         return getAttribute(EntityAttribute.Level) as Int
     }
-
+    // <summary> Returns the player's experience </summary>
     private fun getExperience(): Int {
         return getAttribute(EntityAttribute.Experience) as Int
     }
-
+    // <summary> Returns the player's inventory </summary>
     private fun getInventory(): List<Any?> {
         return getAttribute(EntityAttribute.Inventory) as List<Any?>
     }
@@ -117,7 +117,7 @@ class Player : Entity() {
         return getAttribute(EntityAttribute.Image)
     }
 
-    private fun getName(): String {
+    override fun getName(): String {
         return getAttribute(EntityAttribute.Name) as String
     }
 

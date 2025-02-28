@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "1.9.22"
+    id("io.freefair.lombok") version "8.6"
     application
 }
 
@@ -12,13 +13,17 @@ repositories {
 }
 
 dependencies {
-    implementation ("de.gurkenlabs:litiengine:0.8.0")
-    testImplementation ("org.junit.jupiter:junit-jupiter-api:5.8.1")
-    testImplementation ("org.junit.jupiter:junit-jupiter")
-    implementation("org.projectlombok:lombok:1.18.36")
-    annotationProcessor( "org.projectlombok:lombok:1.18.36")
-    implementation("com.github.houbb:git4j:0.1.0")
+
+    implementation("de.gurkenlabs:litiengine:0.8.0")
     implementation("org.yaml:snakeyaml:2.3")
+    implementation("com.github.houbb:git4j:0.1.0")
+
+    implementation("org.projectlombok:lombok:1.18.36")
+    annotationProcessor("org.projectlombok:lombok:1.18.36")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter")
+
 }
 
 tasks.test {

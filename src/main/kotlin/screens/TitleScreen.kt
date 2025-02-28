@@ -6,6 +6,7 @@ import de.gurkenlabs.litiengine.graphics.ImageRenderer
 import de.gurkenlabs.litiengine.graphics.TextRenderer
 import de.gurkenlabs.litiengine.gui.GuiComponent
 import de.gurkenlabs.litiengine.gui.ImageComponent
+import de.gurkenlabs.litiengine.gui.TextFieldComponent
 import de.gurkenlabs.litiengine.gui.screens.GameScreen
 import de.gurkenlabs.litiengine.input.Input
 import de.gurkenlabs.litiengine.resources.Resources
@@ -105,8 +106,20 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
 
     private fun startGame() {
         hideTitleForeground()
+        loadTexts()
+        Game.screens().display("GAME")
+    }
 
-
+    private fun loadTexts() {
+        this.components.add(
+           TextFieldComponent(
+                Game.window().center.x - 400,
+                Game.window().center.y - 100,
+                800.0,
+                400.0,
+                "이 이야기를 적어내려가는 당신에게는 약 3000년 뒤. 다른 세계에서의 당신은 엄청난 고난을 겪고 있었다."
+           )
+        )
     }
 
     private fun hideTitleForeground() {

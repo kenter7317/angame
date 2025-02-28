@@ -1,8 +1,9 @@
 package per.kenter7317.entity
-
+import java.util.HashMap
 import java.util.UUID
+import de.gurkenlabs.litiengine.entities.Entity
 
-abstract class Entity {
+abstract class AEntity : Entity() {
 
     protected lateinit var attributes: HashMap<EntityAttribute, Any?>
 
