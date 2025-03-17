@@ -1,4 +1,4 @@
-package per.kenter7317.npcaa
+package per.kenter7317.npc
 
 class NpcData {
 

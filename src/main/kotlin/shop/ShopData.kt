@@ -1,5 +1,8 @@
 package per.kenter7317.shop
 
-class ShopData {
+import lombok.Getter
 
-}
+class ShopData(
+    @Getter
+    internal val stockList: List<Stock>
+)
