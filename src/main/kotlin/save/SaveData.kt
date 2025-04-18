@@ -6,12 +6,11 @@ import per.kenter7317.event.EventData
 import per.kenter7317.entity.player.quest.QuestData
 import per.kenter7317.entity.player.skill.SkillData
 import per.kenter7317.item.ItemData
-import per.kenter7317.npcaa.NpcData
+import per.kenter7317.npc.NpcData
 import per.kenter7317.shop.ShopData
 import java.io.File
 
 class SaveData(val file : File) {
-
     lateinit var playerData: PlayerData
     lateinit var mapData: List<Entity>
     lateinit var npcData: List<NpcData>

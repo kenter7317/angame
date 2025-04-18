@@ -8,7 +8,7 @@ class Shop {
         fun stockList(stockList: List<Stock>) = apply { this.stockList = stockList }
         fun build() = ShopData(stockList)
     }
-    fun construct(): ShopGui {
-        return ShopGui()
-    }
+//    fun construct(): ShopGui {
+//        //return ShopGui()
+//    }
 }
