@@ -132,7 +132,7 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
         val originalColor: Color = comp.appearance.foreColor // 현재 foreColor 가져오기
         var alpha = 1.0f // 초기 투명도 (완전 불투명)
 
-        val interval = 50 // 50ms마다 실행
+        val interval = 50 // 50ms 마다 실행
         val steps = duration / interval // 전체 단계 수
 
         timer(period = interval.toLong(), initialDelay = 0) {

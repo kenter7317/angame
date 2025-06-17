@@ -2,6 +2,7 @@ package per.kenter7317.entity.player.quest
 
 import per.kenter7317.entity.player.quest.require.QuestsRequirement
 import per.kenter7317.entity.player.quest.require.QuestsRequirementType
+import kotlin.collections.forEach
 
 class QuestManager {
     private val quests: MutableList<QuestData> = mutableListOf()
