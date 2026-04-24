@@ -12,6 +12,7 @@ repositories {
 }
 
 dependencies {
+    implementation("com.github.ben-manes.caffeine:caffeine:3.2.3")
     implementation ("de.gurkenlabs:litiengine:0.8.0")
     testImplementation ("org.junit.jupiter:junit-jupiter-api:5.8.1")
     testImplementation ("org.junit.jupiter:junit-jupiter")
