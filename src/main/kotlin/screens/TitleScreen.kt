@@ -27,13 +27,15 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
 
     private lateinit var LOGO: BufferedImage
 
+    private var compFontSize: Float = 48f
+
     override fun prepare() {
         super.prepare()
         Game.loop().attach(this)
         Game.window().renderComponent.background = Color.BLACK
         Game.graphics().baseRenderScale = 6f * Game.window().resolutionScale
         for (comp in this.menu.cellComponents) {
-            comp.font = Resources.fonts().get("Sam3KRFont.ttf").deriveFont(48f)
+            comp.font = Resources.fonts().get("Sam3KRFont.ttf").deriveFont(compFontSize)
             val sheet = Resources.spritesheets().loadFrom("sprites.info")[1]
             comp.setSpritesheet(sheet)
             comp.setTextAntialiasing(true)
@@ -78,19 +80,22 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
             }
         }
         components.add(this.menu)
-        components.add(ImageComponent(Game.window().center.x - LOGO.width / 2, Game.window().height * 2.5 / 8 - LOGO.height * 5 / 6, LOGO))
+        components.add(ImageComponent(
+            Game.window().center.x - LOGO.width / 2,
+            Game.window().height * 2.5 / 8 - LOGO.height * 5 / 6,
+            LOGO))
     }
 
-    override fun render(g: Graphics2D?) {
-        ImageRenderer.render(g, Imaging.scale(BG, 1920, 1080), 0.0, 0.0)
-        g!!.color = Color(26, 47, 4)
+    override fun render(graphics2D: Graphics2D?) {
+        ImageRenderer.render(graphics2D, Imaging.scale(BG, 1920, 1080), 0.0, 0.0)
+        graphics2D!!.color = Color(26, 47, 4)
 
-        val originalHints = g.renderingHints
+        val originalHints = graphics2D.renderingHints
 
-        TextRenderer.enableTextAntiAliasing(g)
+        TextRenderer.enableTextAntiAliasing(graphics2D)
 
-        g.setRenderingHints(originalHints)
-        super.render(g)
+        graphics2D.setRenderingHints(originalHints)
+        super.render(graphics2D)
     }
 
     override fun update() {

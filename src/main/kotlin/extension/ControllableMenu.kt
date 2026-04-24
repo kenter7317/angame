@@ -19,11 +19,12 @@ class ControllableMenu(
     private var currentSelection by Delegates.notNull<Int>()
     private var items: Array<RunnableString>
     private var selectionChangeConsumers: List<IntConsumer>?
+    private var cachedSelection = 0 // Implement with engine
 
     init {
-        this.currentSelection = 0
-        this.items = items.asIterable().toList().toTypedArray()
-        this.selectionChangeConsumers = List<IntConsumer>(items.size) { i ->
+        this.currentSelection = cachedSelection
+        this.items = items.toList().toTypedArray()
+        this.selectionChangeConsumers = List(items.size) { i ->
             IntConsumer {
                 fun accept(value: Int) {
                     this.cellComponents[i].isHovered = i == value
@@ -52,10 +53,10 @@ class ControllableMenu(
     fun runCurrentSelection() {
         items[this.currentSelection].run()
     }
-    fun moveSelection(minus: Boolean) {
+    fun moveSelection(movePrevious: Boolean) {
         val size = this.cellComponents.size
-        this.currentSelection = circleSelection(this.currentSelection, size, minus)
-        this.hoverSelection(circleSelection(this.currentSelection, this.cellComponents.size, !minus))
+        this.currentSelection = circleSelection(this.currentSelection, size, movePrevious)
+        this.hoverSelection(circleSelection(this.currentSelection, this.cellComponents.size, !movePrevious))
     }
 
     private fun hoverSelection(lastLocation: Int) {
@@ -66,5 +67,4 @@ class ControllableMenu(
         this.cellComponents[last].isHovered = false
         this.cellComponents[current].isHovered = true
     }
-
 }
