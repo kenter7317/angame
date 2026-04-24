@@ -4,8 +4,8 @@ import de.gurkenlabs.litiengine.graphics.Spritesheet
 import de.gurkenlabs.litiengine.gui.ComponentMouseEvent
 import de.gurkenlabs.litiengine.gui.ImageComponent
 import de.gurkenlabs.litiengine.gui.ImageComponentList
+import per.kenter7317.per.kenter7317.extension.SelectableItems
 import java.util.function.IntConsumer
-import kotlin.properties.Delegates
 
 class ControllableMenu(
     x: Double,
@@ -14,16 +14,17 @@ class ControllableMenu(
     height: Double,
     background: Spritesheet?,
     vararg items: RunnableString
-) : ImageComponentList(x, y, width, height, items.size, 1, null, background) {
+) : ImageComponentList(x, y, width, height, items.size, 1, null, background), SelectableItems {
 
-    private var currentSelection by Delegates.notNull<Int>()
-    private var items: Array<RunnableString>
-    private var selectionChangeConsumers: List<IntConsumer>?
-    private var cachedSelection = 0 // Implement with engine
+    override var currentSelection: Int
+    var cachedSelection = 0
+    override var items: List<RunnableString>
+    override var selectionChangeConsumers: List<IntConsumer>?
+    // Implement with engine
 
     init {
         this.currentSelection = cachedSelection
-        this.items = items.toList().toTypedArray()
+        this.items = items.asList()
         this.selectionChangeConsumers = List(items.size) { i ->
             IntConsumer {
                 fun accept(value: Int) {
@@ -53,9 +54,8 @@ class ControllableMenu(
     fun runCurrentSelection() {
         items[this.currentSelection].run()
     }
-    fun moveSelection(movePrevious: Boolean) {
-        val size = this.cellComponents.size
-        this.currentSelection = circleSelection(this.currentSelection, size, movePrevious)
+    override fun moveSelection(movePrevious: Boolean) {
+        super.moveSelection(movePrevious)
         this.hoverSelection(circleSelection(this.currentSelection, this.cellComponents.size, !movePrevious))
     }
 
@@ -63,7 +63,7 @@ class ControllableMenu(
         changeSelection(lastLocation, this.currentSelection)
     }
 
-    private fun changeSelection(last: Int, current: Int) {
+    override fun changeSelection(last: Int, current: Int) {
         this.cellComponents[last].isHovered = false
         this.cellComponents[current].isHovered = true
     }
