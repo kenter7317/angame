@@ -1,4 +1,4 @@
-package per.kenter7317.extension
+package per.kenter7317.extension.util
 
 import de.gurkenlabs.litiengine.gui.Menu
 

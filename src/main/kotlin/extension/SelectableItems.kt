@@ -1,7 +1,7 @@
-package per.kenter7317.per.kenter7317.extension
+package per.kenter7317.extension
 
-import per.kenter7317.extension.RunnableString
-import per.kenter7317.extension.circleSelection
+import per.kenter7317.extension.util.RunnableString
+import per.kenter7317.extension.util.circleSelection
 import java.util.function.IntConsumer
 
 interface SelectableItems {

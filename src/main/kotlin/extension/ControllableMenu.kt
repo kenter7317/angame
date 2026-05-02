@@ -4,7 +4,8 @@ import de.gurkenlabs.litiengine.graphics.Spritesheet
 import de.gurkenlabs.litiengine.gui.ComponentMouseEvent
 import de.gurkenlabs.litiengine.gui.ImageComponent
 import de.gurkenlabs.litiengine.gui.ImageComponentList
-import per.kenter7317.per.kenter7317.extension.SelectableItems
+import per.kenter7317.extension.util.RunnableString
+import per.kenter7317.extension.util.circleSelection
 import java.util.function.IntConsumer
 
 class ControllableMenu(

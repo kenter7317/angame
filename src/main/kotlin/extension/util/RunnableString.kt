@@ -1,6 +1,4 @@
-package per.kenter7317.extension
-
-import java.lang.reflect.Method
+package per.kenter7317.extension.util
 
 class RunnableString(val action: () -> Unit, private val string: String) {
 
