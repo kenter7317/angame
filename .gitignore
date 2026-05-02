@@ -46,3 +46,6 @@ bin/
 /game.*
 /*.log
 /*.log.*
+game.log
+game.log.lck
+game.litidata
