@@ -4,14 +4,14 @@ import per.kenter7317.extension.util.RunnableString
 import per.kenter7317.extension.util.circleSelection
 import java.util.function.IntConsumer
 
-interface SelectableItems {
+interface SelectableObjects {
 
     var currentSelection : Int
-    var items: List<RunnableString>
+    var objects: List<RunnableString>
     var selectionChangeConsumers: List<IntConsumer>?
 
     fun moveSelection(movePrevious: Boolean) {
-        val size = this.items.size
+        val size = this.objects.size
         this.currentSelection = circleSelection(this.currentSelection, size, movePrevious)
     }
 

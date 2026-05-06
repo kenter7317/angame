@@ -7,7 +7,6 @@ import de.gurkenlabs.litiengine.gui.ImageComponentList
 import per.kenter7317.extension.util.RunnableString
 import per.kenter7317.extension.util.circleSelection
 import java.util.function.IntConsumer
-import kotlin.properties.Delegates
 
 class ControllableMenu(
     x: Double,
@@ -16,17 +15,17 @@ class ControllableMenu(
     height: Double,
     background: Spritesheet?,
     vararg items: RunnableString
-) : ImageComponentList(x, y, width, height, items.size, 1, null, background), SelectableItems {
+) : ImageComponentList(x, y, width, height, items.size, 1, null, background), SelectableObjects {
 
     override var currentSelection: Int
     var cachedSelection = 0
-    override var items: List<RunnableString>
+    override var objects: List<RunnableString>
     override var selectionChangeConsumers: List<IntConsumer>?
     // Implement with engine
 
     init {
         this.currentSelection = cachedSelection
-        this.items = items.asList()
+        this.objects = items.asList()
         this.selectionChangeConsumers = List(items.size) { i ->
             IntConsumer {
                 fun accept(value: Int) {
@@ -38,9 +37,9 @@ class ControllableMenu(
 
     override fun prepare() {
         super.prepare()
-        for (i in items.indices) {
+        for (i in objects.indices) {
             val menuButton = this.cellComponents[i] as ImageComponent
-            menuButton.text = items[i].toString()
+            menuButton.text = objects[i].toString()
             menuButton.onHovered {
                 changeSelection(this.currentSelection, i)
                 this.currentSelection = this.cellComponents.indexOf(menuButton)
@@ -54,7 +53,7 @@ class ControllableMenu(
     }
 
     fun runCurrentSelection() {
-        items[this.currentSelection].run()
+        objects[this.currentSelection].run()
     }
     override fun moveSelection(movePrevious: Boolean) {
         super.moveSelection(movePrevious)
