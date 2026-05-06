@@ -2,10 +2,11 @@ package per.kenter7317.entity
 import java.util.HashMap
 import java.util.UUID
 import de.gurkenlabs.litiengine.entities.Entity
+import java.util.concurrent.ConcurrentHashMap
 
 abstract class AEntity : Entity() {
 
-    protected lateinit var attributes: HashMap<EntityAttribute, Any?>
+    protected lateinit var attributes: ConcurrentHashMap<EntityAttribute, Any?>
 
     protected lateinit var possibleAttributes: HashMap<EntityAttribute, Class<*>>
 

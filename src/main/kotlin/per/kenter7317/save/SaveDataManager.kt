@@ -1,17 +1,18 @@
 package per.kenter7317.save
 
-import com.github.houbb.git4j.core.JGitImpl
 import org.eclipse.jgit.api.Git
+import org.eclipse.jgit.lib.Repository
 import org.yaml.snakeyaml.Yaml
 import java.io.File
 
-class SaveDataManager(private val connectedRepository: JGitImpl) {
+class SaveDataManager(private var connectedRepository: Repository) {
 
     lateinit var git: Git
 
     fun createSaveDataRepository() {
         try {
-            git = connectedRepository.init("./saveData")
+            git = Git.init().setDirectory(File("./saveData")).call()
+            connectedRepository = git.repository
         } catch (e: Exception) {
             e.printStackTrace()
         }

@@ -1,8 +1,8 @@
 package per.kenter7317.screens
 
+import de.gurkenlabs.litiengine.Align
 import de.gurkenlabs.litiengine.Game
 import de.gurkenlabs.litiengine.IUpdateable
-import de.gurkenlabs.litiengine.graphics.Spritesheet
 import de.gurkenlabs.litiengine.graphics.TextRenderer
 import de.gurkenlabs.litiengine.gui.GuiComponent
 import de.gurkenlabs.litiengine.gui.ImageComponent
@@ -17,17 +17,15 @@ import per.kenter7317.extension.util.RunnableString
 import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.event.KeyEvent
-import java.awt.image.BufferedImage
+
 @Suppress("UNUSED_PARAMETER")
 class TitleScreen : GameScreen("Title"), IUpdateable {
 
-    private lateinit var BG: Spritesheet
-
-    private lateinit var LOGO: BufferedImage
-
     private lateinit var menu: ControllableMenu
-
+    private lateinit var backgroundComponent: GuiComponent
+    private lateinit var logoComponent: GuiComponent
     private var compFontSize: Float = 48f
+
 
     override fun prepare() {
         super.prepare()
@@ -59,14 +57,13 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
 
     override fun initializeComponents() {
         super.initializeComponents()
-        BG = Resources.spritesheets().get("menu-bg.png")
-        LOGO = Resources.images().get("menu-logo.png")
+        Resources.spritesheets().loadFrom("sprites.info")
         this.menu = ControllableMenu(
             Game.window().center.x - 400,
             Game.window().center.y - 100,
             800.0,
             400.0,
-            BG,
+            null,
             RunnableString(this::startGame, "새 이야기를 작성한다."),
             RunnableString(this::loadGame, "이야기를 불러온다."),
             RunnableString(this::setting, "설정한다.")
@@ -88,12 +85,7 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
             }
         }
         components.add(this.menu)
-        components.add(
-            ImageComponent(
-                Game.window().center.x - LOGO.width / 2,
-                Game.window().height * 2.5 / 8 - LOGO.height * 5 / 6, LOGO
-            )
-        )
+        components.add(loadLogo())
     }
 
     override fun render(graphics2D: Graphics2D?) {
@@ -118,7 +110,7 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
     }
 
     private fun hideTitleMenu() {
-            compFadeOut(this.menu)
+        compositionFadeOut(this.menu)
     }
 
     private fun hideTitleBackground() {
@@ -126,11 +118,11 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
     }
 
     private fun hideTitleForeground() {
-        this.components.forEach { compFadeOut(it) }
+        this.components.forEach { compositionFadeOut(it) }
     }
 
-    private fun compFadeOut(comp: GuiComponent) {
-        comp.setTweenValues(TweenType.OPACITY, floatArrayOf(1.0f,0.8f,0.6f,0.4f,0.2f,0.0f))
+    private fun compositionFadeOut(comp: GuiComponent) {
+        comp.setTweenValues(TweenType.OPACITY, floatArrayOf(1.0f, 0.8f, 0.6f, 0.4f, 0.2f, 0.0f))
         Tween(comp, TweenType.OPACITY, 18000).begin()
 
 //        timer(period = interval.toLong(), initialDelay = 0) {
@@ -159,4 +151,9 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
         TODO("Not yet implemented")
     }
 
+    private fun loadLogo() : ImageComponent {
+        val logo = ImageComponent(Game.window().center.x,0.0, Resources.images().get("menu-logo.png"))
+        logo.imageAlign = Align.CENTER
+        return logo
+    }
 }

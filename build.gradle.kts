@@ -14,6 +14,8 @@ repositories {
 dependencies {
     implementation("com.github.ben-manes.caffeine:caffeine:3.2.3")
     implementation("de.gurkenlabs:litiengine:0.11.1")
+    implementation("org.eclipse.jgit:org.eclipse.jgit:7.6.+")
+    implementation("org.yaml:snakeyaml:2.6")
     testImplementation ("org.junit.jupiter:junit-jupiter-api:5.8.1")
     testImplementation ("org.junit.jupiter:junit-jupiter")
     implementation( "org.projectlombok:lombok:1.18.36")
