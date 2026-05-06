@@ -19,7 +19,7 @@ abstract class ShopGui(
     private val alignMethod: AlignMethod by Delegates.notNull()
 
     class ShopGuiPhase {
-        var phase: Int by Delegates.notNull()
+        var phaseInt: Int by Delegates.notNull()
         var phaseName: String by Delegates.notNull()
         var componentList: List<ShopComponent> by Delegates.notNull()
         val phaseType: Int by Delegates.notNull()
