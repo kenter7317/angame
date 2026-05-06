@@ -1,7 +1,7 @@
 package per.kenter7317.gui.shop
 
 import de.gurkenlabs.litiengine.graphics.Spritesheet
-import per.kenter7317.shop.Shop
+import per.kenter7317.data.shop.Shop
 import java.awt.Graphics2D
 import kotlin.properties.Delegates
 
