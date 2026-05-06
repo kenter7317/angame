@@ -16,6 +16,7 @@ build/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+./.idea/*.*
 
 ### Eclipse ###
 .apt_generated
@@ -49,3 +50,5 @@ bin/
 game.log
 game.log.lck
 game.litidata
+fonts
+sprites
