@@ -7,6 +7,7 @@ import java.awt.Graphics2D
 class SaveDataScreen : GameScreen("SaveData") {
 
     private lateinit var saveDataList: SaveDataList
+
     override fun prepare() {
         super.prepare()
     }
