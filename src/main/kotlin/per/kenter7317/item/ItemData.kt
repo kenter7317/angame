@@ -7,5 +7,5 @@ class ItemData (val itemName : String,
                 val itemDescription : String,
                 val itemImage: BufferedImage
 ){
-
+    //todo : need apply DOP
 }

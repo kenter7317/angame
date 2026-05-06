@@ -10,5 +10,5 @@ class ShopComponent(
     val text : RunnableString,
     val type: ShopComponentType
 ) {
-
+ //todo : replace with typedef
 }

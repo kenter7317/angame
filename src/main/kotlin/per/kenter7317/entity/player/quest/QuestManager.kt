@@ -2,13 +2,14 @@ package per.kenter7317.entity.player.quest
 
 import per.kenter7317.entity.player.quest.require.QuestsRequirement
 import per.kenter7317.entity.player.quest.require.QuestsRequirementType
+import java.util.concurrent.ConcurrentHashMap
 import kotlin.collections.forEach
 
 class QuestManager {
-    private val quests: MutableList<QuestData> = mutableListOf()
+    private val quests: ConcurrentHashMap<QuestData ,Quest> = mutableMapOf<QuestData, Quest>() as ConcurrentHashMap<QuestData, Quest>
 
-    fun addQuest(quest: QuestData) {
-        quests.add(quest)
+    fun addQuest( quest: Quest) {
+        quests[quest.questData] = quest
     }
 
     fun removeQuest(quest: QuestData) {
@@ -16,11 +17,11 @@ class QuestManager {
     }
 
     fun getQuests(): List<QuestData> {
-        return quests
+        return quests.keys.toList()
     }
 
     private fun getQuest(questId: String): QuestData? {
-        return quests.find { it.questId == questId }
+        return quests.keys.find { it.questId == questId }
     }
     fun checkQuest(questId: String): Boolean {
         getQuest(questId)?.let {
