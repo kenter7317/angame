@@ -2,7 +2,7 @@ package per.kenter7317.gui.shop
 
 import de.gurkenlabs.litiengine.graphics.Spritesheet
 import de.gurkenlabs.litiengine.gui.GuiComponent
-import per.kenter7317.AlignMethod
+import per.kenter7317.gui.shop.AlignMethod
 import kotlin.properties.Delegates
 
 abstract class ShopGui(
