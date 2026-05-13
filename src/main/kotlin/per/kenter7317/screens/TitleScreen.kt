@@ -13,7 +13,10 @@ import de.gurkenlabs.litiengine.tweening.Tween
 import de.gurkenlabs.litiengine.tweening.TweenType
 import de.gurkenlabs.litiengine.util.ColorHelper
 import per.kenter7317.extension.ControllableMenu
+import per.kenter7317.extension.data.FontStyle
 import per.kenter7317.extension.util.RunnableString
+import per.kenter7317.extension.util.setResourceFont
+import per.kenter7317.gui.shop.AlignMethod
 import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.event.KeyEvent
@@ -21,11 +24,57 @@ import java.awt.event.KeyEvent
 @Suppress("UNUSED_PARAMETER")
 class TitleScreen : GameScreen("Title"), IUpdateable {
 
+    class Builder {
+        private lateinit var menu: ControllableMenu
+        private lateinit var backgroundComponent: GuiComponent
+        private lateinit var logoComponent: GuiComponent
+        private lateinit var fontStyle: FontStyle
+        private lateinit var align: AlignMethod
+
+        fun setMenu(menu: ControllableMenu) = apply { this.menu = menu }
+        fun setBackgroundComponent(backgroundComponent: GuiComponent) =
+            apply { this.backgroundComponent = backgroundComponent }
+
+        fun setLogoComponent(logoComponent: GuiComponent) = apply { this.logoComponent = logoComponent }
+        fun setFontStyle(fontStyle: FontStyle) = apply { this.fontStyle = fontStyle }
+        fun setAlign(align: AlignMethod) = apply { this.align = align }
+
+        fun injectDependency(it : TitleScreen) = apply {
+            if (this.takeIf(
+                    {this::menu.isInitialized && this::backgroundComponent.isInitialized && this::logoComponent.isInitialized && this::fontStyle.isInitialized && this::align.isInitialized
+                    }
+                ) == null
+            ) {
+                throw IllegalStateException(" [AnGame] ${this.javaClass.name} : All dependencies must be initialized before building the TitleScreen.")
+            }
+            it.menu = this.menu
+            it.backgroundComponent = this.backgroundComponent
+            it.logoComponent = this.logoComponent
+            it.fontStyle = this.fontStyle
+        }
+
+        fun build(): TitleScreen {
+            val titleScreen = TitleScreen()
+            injectDependency(titleScreen)
+            return titleScreen
+        }
+
+        fun buildWithDefault(): TitleScreen {
+            Game.log().warning("Using default values for TitleScreen dependencies. Consider using the builder methods to set custom values.")
+            val titleScreen = TitleScreen()
+            titleScreen.menu = this.menu
+            titleScreen.backgroundComponent = ImageComponent(0.0, 0.0, Resources.images().get("menu-bg.png"))
+            titleScreen.logoComponent = ImageComponent(0.0, 0.0, Resources.images().get("menu-bg.png"))
+            titleScreen.fontStyle = this.fontStyle
+            return titleScreen
+        }
+    }
+
     private lateinit var menu: ControllableMenu
     private lateinit var backgroundComponent: GuiComponent
     private lateinit var logoComponent: GuiComponent
-    private var compFontSize: Float = 48f
-
+    private lateinit var fontStyle: FontStyle
+    private lateinit var align: AlignMethod
 
     override fun prepare() {
         super.prepare()
@@ -39,7 +88,7 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
 
     private fun composeMenu(menu: ControllableMenu) {
         for (comp in menu.cellComponents) {
-            comp.font = Resources.fonts().get("Sam3KRFont.ttf").deriveFont(compFontSize)
+            comp.setResourceFont(fontStyle.font, fontStyle.size)
             composeSheet(
                 comp, ColorHelper.decode("#255655"),
                 ColorHelper.decode("#593D35")
@@ -151,8 +200,8 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
         TODO("Not yet implemented")
     }
 
-    private fun loadLogo() : ImageComponent {
-        val logo = ImageComponent(Game.window().center.x,0.0, Resources.images().get("menu-logo.png"))
+    private fun loadLogo(): ImageComponent {
+        val logo = ImageComponent(Game.window().center.x, 0.0, Resources.images().get("menu-logo.png"))
         logo.imageAlign = Align.CENTER
         return logo
     }
