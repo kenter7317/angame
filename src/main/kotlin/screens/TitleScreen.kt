@@ -16,7 +16,7 @@ import per.kenter7317.extension.ControllableMenu
 import per.kenter7317.extension.data.FontStyle
 import per.kenter7317.extension.util.RunnableString
 import per.kenter7317.extension.util.setResourceFont
-import per.kenter7317.gui.shop.AlignMethod
+import per.kenter7317.gui.shop.Enum.AlignMethod
 import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.event.KeyEvent

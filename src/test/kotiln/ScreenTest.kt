@@ -9,7 +9,6 @@ class ScreenTest {
     @Test
     fun testScreenInit(){
         Game.init()
-        Game.load(TitleScreen)
         TitleScreen.Builder().injectDependency(TitleScreen.Builder().buildWithDefault())
     }
 }
