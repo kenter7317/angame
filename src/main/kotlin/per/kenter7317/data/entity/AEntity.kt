@@ -2,7 +2,6 @@ package per.kenter7317.data.entity
 import java.util.HashMap
 import java.util.UUID
 import de.gurkenlabs.litiengine.entities.Entity
-import java.util.concurrent.ConcurrentHashMap
 
 abstract class AEntity : Entity() {
 
@@ -10,7 +9,7 @@ abstract class AEntity : Entity() {
 
     protected lateinit var possibleAttributes: HashMap<EntityAttribute, Class<*>>
 
-     lateinit var uuid: UUID
+    lateinit var uuid: UUID
 
     protected fun updateAttributes(attributes: Map<EntityAttribute, Any>) {
         attributes.forEach { (attribute, value) ->
