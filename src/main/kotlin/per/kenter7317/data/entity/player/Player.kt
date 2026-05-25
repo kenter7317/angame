@@ -4,7 +4,7 @@ import de.gurkenlabs.litiengine.Direction
 import per.kenter7317.data.entity.AEntity
 import per.kenter7317.data.entity.EntityAttribute
 
-private fun defaultattr() : AEntity.attr_t {
+private fun defaultattr() : AEntity.EntityAttributeMapType {
 	return hashMapOf(
 		EntityAttribute.Health to 100,
 		EntityAttribute.MaxHealth to 100,
@@ -23,7 +23,7 @@ private fun defaultattr() : AEntity.attr_t {
 	)
 }
 
-private fun defaultattrval() : AEntity.attr_val_t {
+private fun defaultattrval() : AEntity.EntityAttributeClassMapType {
 	return hashMapOf(
 		EntityAttribute.Health to Int::class.java,
 		EntityAttribute.MaxHealth to Int::class.java,
@@ -54,15 +54,15 @@ class Player : AEntity() {
 
 	/** Configure initiation */
 	class Cfg {
-		private lateinit var attr: AEntity.attr_t
-		private lateinit var attrval: AEntity.attr_val_t
+		private lateinit var attr: AEntity.EntityAttributeMapType
+		private lateinit var attrval: AEntity.EntityAttributeClassMapType
 
-		fun setattr(x : AEntity.attr_t) : Cfg {
-			this.attr = x; return this
+		fun setattr(prmattrval : AEntity.EntityAttributeMapType) : Cfg {
+			this.attr = prmattrval; return this
 		}
 
-		fun setattrval(x : AEntity.attr_val_t) : Cfg {
-			this.attrval = x; return this
+		fun setattrval(prmattrclassval : AEntity.EntityAttributeClassMapType) : Cfg {
+			this.attrval = prmattrclassval; return this
 		}
 
 		fun build() : Player {

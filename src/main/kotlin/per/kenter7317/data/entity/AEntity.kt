@@ -5,12 +5,12 @@ import de.gurkenlabs.litiengine.entities.Entity
 
 abstract class AEntity : Entity() {
 	/** any attributes */
-	typealias attr_t		= HashMap<EntityAttribute, Any?>
+	typealias EntityAttributeMapType		= HashMap<EntityAttribute, Any?>
 	/** valid attributes */
-	typealias attr_val_t		= HashMap<EntityAttribute, Class<*>>
+	typealias EntityAttributeClassMapType		= HashMap<EntityAttribute, Class<*>>
 
-	protected lateinit var attributes		: attr_t
-	protected lateinit var possibleAttributes	: attr_val_t
+	protected lateinit var attributes		: EntityAttributeMapType
+	protected lateinit var possibleAttributes	: EntityAttributeClassMapType
 
 	lateinit var uuid: UUID
 	protected fun updateAttributes(attributes: Map<EntityAttribute, Any>) {
