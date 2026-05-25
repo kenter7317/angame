@@ -29,8 +29,4 @@ class DefaultShopGUI(
         return this.phase.phaseInt
     }
 
-
-
-
-
 }

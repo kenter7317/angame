@@ -22,7 +22,8 @@ class SaveDataList(
     override var objects: List<RunnableString> = emptyList()
     override var selectionChangeConsumers: List<IntConsumer>? = null
     override fun changeSelection(last: Int, current: Int) {
-
+        this.cellComponents[last].isHovered = false
+        this.cellComponents[current].isHovered = true
     }
 
 }

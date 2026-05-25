@@ -2,6 +2,7 @@ package per.kenter7317.gui.shop
 
 import lombok.Getter
 import per.kenter7317.extension.util.RunnableString
+import per.kenter7317.gui.shop.Enum.ShopComponentType
 import java.awt.image.BufferedImage
 
 @Getter
@@ -10,5 +11,5 @@ class ShopComponent(
     val text : RunnableString,
     val type: ShopComponentType
 ) {
- //todo : replace with typedef
+    //todo : replace with typedef
 }
