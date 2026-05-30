@@ -4,7 +4,7 @@ import de.gurkenlabs.litiengine.Direction
 import per.kenter7317.data.entity.AEntity
 import per.kenter7317.data.entity.EntityAttribute
 
-private fun defaultattr() : AEntity.EntityAttributeMapType {
+private fun defaultAttr() : AEntity.EntityAttributeMapType {
 	return hashMapOf(
 		EntityAttribute.Health to 100,
 		EntityAttribute.MaxHealth to 100,
@@ -23,7 +23,7 @@ private fun defaultattr() : AEntity.EntityAttributeMapType {
 	)
 }
 
-private fun defaultattrval() : AEntity.EntityAttributeClassMapType {
+private fun defaultAttrval() : AEntity.EntityAttributeClassMapType {
 	return hashMapOf(
 		EntityAttribute.Health to Int::class.java,
 		EntityAttribute.MaxHealth to Int::class.java,
@@ -45,8 +45,8 @@ private fun defaultattrval() : AEntity.EntityAttributeClassMapType {
 
 fun default() : Player {
 	return Player.Cfg()
-	.setattr(defaultattr())
-	.setattrval(defaultattrval())
+	.setAttr(defaultAttr())
+	.setAttrVal(defaultAttrval())
 	.build()
 }
 
@@ -54,21 +54,21 @@ class Player : AEntity() {
 
 	/** Configure initiation */
 	class Cfg {
-		private lateinit var attr: AEntity.EntityAttributeMapType
-		private lateinit var attrval: AEntity.EntityAttributeClassMapType
+		private lateinit var attributes: AEntity.EntityAttributeMapType
+		private lateinit var attributesValid: AEntity.EntityAttributeClassMapType
 
-		fun setattr(prmattrval : AEntity.EntityAttributeMapType) : Cfg {
-			this.attr = prmattrval; return this
+		fun setAttr(prmatTrval : AEntity.EntityAttributeMapType) : Cfg {
+			this.attributes = prmatTrval; return this
 		}
 
-		fun setattrval(prmattrclassval : AEntity.EntityAttributeClassMapType) : Cfg {
-			this.attrval = prmattrclassval; return this
+		fun setAttrVal(prmattrclassval : AEntity.EntityAttributeClassMapType) : Cfg {
+			this.attributesValid = prmattrclassval; return this
 		}
 
 		fun build() : Player {
 			var p			= Player()
-			p.attributes		= this.attr
-			p.possibleAttributes	= this.attrval
+			p.attributes		= this.attributes
+			p.possibleAttributes	= this.attributesValid
 			return p
 		}
 	}
