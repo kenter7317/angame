@@ -14,6 +14,7 @@ import de.gurkenlabs.litiengine.util.ColorHelper
 import per.kenter7317.extension.util.setResourceFont
 import per.kenter7317.extension.ControllableMenu
 import per.kenter7317.extension.data.FontStyle
+import per.kenter7317.extension.util.ColorSet
 import per.kenter7317.extension.util.RunnableString
 import per.kenter7317.gui.shop.Enum.AlignMethod
 import java.awt.Color
@@ -25,6 +26,8 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
 
     class Builder {
         private lateinit var menu: ControllableMenu
+
+        private lateinit var menuColorSet: ColorSet
         private lateinit var backgroundComponent: GuiComponent
         private lateinit var logoComponent: GuiComponent
         private lateinit var fontStyle: FontStyle
@@ -70,6 +73,8 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
     }
 
     private lateinit var menu: ControllableMenu
+
+    private lateinit var menuColorSet: ColorSet
     private lateinit var backgroundComponent: GuiComponent
     private lateinit var logoComponent: GuiComponent
     private lateinit var fontStyle: FontStyle
@@ -89,44 +94,31 @@ class TitleScreen : GameScreen("Title"), IUpdateable {
         for (comp in menu.cellComponents) {
             comp.setResourceFont(fontStyle)
             composeSheet(
-                comp, ColorHelper.decode("#255655"),
-                ColorHelper.decode("#593D35")
+                comp, menuColorSet
             )
         }
     }
 // code under this line is will be refactor use Builder, skip it.
-    private fun composeSheet(comp: ImageComponent, forecolor: Color?, hoveredForeColor: Color) {
+    private fun composeSheet(comp: ImageComponent, foreColorSet: ColorSet) {
         val sheet = Resources.spritesheets().loadFrom("sprites.info")[1]
         comp.setSpritesheet(sheet)
         comp.setTextAntialiasing(true)
-        comp.appearance.foreColor = forecolor
-        comp.appearanceHovered.foreColor = hoveredForeColor
+        comp.appearance.foreColor = foreColorSet.objectColor
+        comp.appearanceHovered.foreColor = foreColorSet.objectHoverdColor
     }
 
     override fun initializeComponents() {
         super.initializeComponents()
         Resources.spritesheets().loadFrom("sprites.info")
-        this.menu = ControllableMenu(
-            Game.window().center.x - 400,
-            Game.window().center.y - 100,
-            800.0,
-            400.0,
-            null,
-            RunnableString(this::startGame, "새 이야기를 작성한다."),
-            RunnableString(this::loadGame, "이야기를 불러온다."),
-            RunnableString(this::setting, "설정한다.")
-        )
         Input.keyboard().onKeyReleased { event: KeyEvent ->
             val menu = this.menu
             when (event.keyCode) {
                 KeyEvent.VK_UP -> {
                     menu.moveSelection(true)                  //  current = (size - 1) - abs((last + 1) % size)
                 }
-
                 KeyEvent.VK_DOWN -> {
                     menu.moveSelection(false)                 //    current = abs((last + 1) % size)
                 }
-
                 KeyEvent.VK_ENTER -> {
                     menu.runCurrentSelection()
                 }
