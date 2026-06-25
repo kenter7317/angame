@@ -53,3 +53,10 @@ game.litidata
 fonts
 sprites
 config.properties
+
+### kotlin ###
+.kotlin
+.kotlin/*
+
+### Agent ###
+.claude
